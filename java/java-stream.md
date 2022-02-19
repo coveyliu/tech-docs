@@ -4,7 +4,8 @@
 
 # 基本用法
 
-## 作用
+
+## 1. 作用
 
 `Stream API` 提供了强大的数据处理功能
 
@@ -19,7 +20,7 @@
 
 
 
-## 分类
+## 2. 分类
 
 顺序流 和 并行流
 
@@ -27,7 +28,7 @@
 
 
 
-## 如何获取流
+## 3. 如何获取流
 
 
 
@@ -39,7 +40,7 @@
 
 
 
-==Collection==
+<u>Collection></u>
 
 ```java
 public interface Collection<E> extends Iterable<E> {
@@ -54,7 +55,7 @@ public interface Collection<E> extends Iterable<E> {
 
 
 
-==Arrays==，（这只是一个工具类）
+<u>Arrays</u>，（这只是一个工具类）
 
 ```java
 public class Arrays {
@@ -69,7 +70,7 @@ public class Arrays {
 
 
 
-==Stream==
+<u>Stream</u>
 
 ```java
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
@@ -97,7 +98,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-==Demo==
+<u>Demo</u>
 
 ```java
 public void main(String[] args){
@@ -111,7 +112,7 @@ public void main(String[] args){
 
 
 
-### 关于并行流
+### 3.1. 关于并行流
 
 
 
@@ -123,7 +124,7 @@ public void main(String[] args){
 
 
 
-## 中间操作
+## 4. 中间操作
 
 
 
@@ -138,11 +139,11 @@ public void main(String[] args){
 
 
 
-==中间操作只是在构建流程，向上述例子，只有在执行 collect 的时候，才会执行 limit, filter 中间操作==
+<u>中间操作只是在构建流程，向上述例子，只有在执行 collect 的时候，才会执行 limit, filter 中间操作
 
-==中间操作，返回的都是 Stream==
+中间操作，返回的都是 Stream
 
-==中间操作：==
+中间操作：</u>
 
 `filter`, `map`, `distinct`, `sorted`, `skip`, `limit`, `peek`, `mapToLong`, `mapToInt`, `mapToDouble`, `flatMap`
 
@@ -158,11 +159,11 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 终端操作
+## 5. 终端操作
 
 中间操作，真正执行数据处理的工作
 
-
+- `collect`
 
 - `max/min`
 
@@ -218,7 +219,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 作用
+## 1. 作用
 
 `Stream#collect(Collector c)` 是流的终端操作，对流中元素的处理还是由收集器决定
 
@@ -230,7 +231,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 分类
+## 2. 分类
 
 **两类：**
 
@@ -241,7 +242,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 容器收集器
+## 3. 容器收集器
 
 
 
@@ -331,7 +332,7 @@ public final class Collectors {
 
 
 
-## 分组收集器
+## 4. 分组收集器
 
 
 
@@ -341,7 +342,7 @@ public final class Collectors {
 
 
 
-### 参数
+### 4.1. 参数
 
 ```java
 public final class Collectors {
@@ -374,7 +375,7 @@ public final class Collectors {
 
 
 
-### 下游收集器
+### 4.2. 下游收集器
 
 
 
@@ -439,7 +440,7 @@ static class Student{
 
 
 
-#### `Collectors.collectingAndThen()`
+#### 4.2.1. `Collectors.collectingAndThen()`
 
 
 
@@ -461,7 +462,7 @@ public final class Collectors {
 
 
 
-### true 或 false 分组
+### 4.3. true 或 false 分组
 
 
 
@@ -507,7 +508,7 @@ static class Student{
 
 
 
-### 多级分组
+### 4.4. 多级分组
 
 `Collectors.groupBy()`, `Collectos.partitioningBy()`
 
