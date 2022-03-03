@@ -336,9 +336,11 @@ public final class Collectors {
 
 
 
-==分组之后，一定会是一个 map==，`Map<String, &>` 至于 `value` 是什么，取决于下游收集器（分组的元素如何处理）
+- ==分组之后，一定会是一个 map==
 
-分组收集器有下游收集器，默认`Collections.toList()`， 将分组后的元素直接放进`list` 中
+  `Map<String, value>` 至于 `value` 是什么，取决于下游收集器（分组的元素如何处理）
+
+- 分组收集器有下游收集器，默认`Collections.toList()`， 将分组后的元素直接放进`list` 中
 
 
 
