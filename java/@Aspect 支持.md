@@ -1,5 +1,18 @@
 # @Aspect 支持
 
+<!-- TOC -->
+
+- 1. 启用 @Aspect
+- 2. 声明一个切面
+- 3. 声明 Pointcut
+- 4. 共享 pointcut
+- 5. pointcut 表达式例子
+- 6. Advice
+    - 6.1. advice 参数
+
+<!-- /TOC -->
+
+
 
 
 `@Aspect` 能将一个 class 声明为一个切面 `Aspect`，这是`Asepct` 的一种风格，spring AOP 同样支持这个风格
@@ -11,7 +24,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 启用 @Aspect
+## 1. 启用 @Aspect
 
 
 
@@ -48,7 +61,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 声明一个切面
+## 2. 声明一个切面
 
 
 
@@ -69,7 +82,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 声明 Pointcut
+## 3. 声明 Pointcut
 
 
 
@@ -139,7 +152,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 共享 pointcut
+## 4. 共享 pointcut
 
 
 
@@ -231,7 +244,7 @@ public MyAspectConfiguration{
 
 
 
-## pointcut 表达式例子
+## 5. pointcut 表达式例子
 
 
 
@@ -243,11 +256,11 @@ public MyAspectConfiguration{
 
 
 
-# Advice
+## 6. Advice
 
 
 
-## advice 参数
+### 6.1. advice 参数
 
 
 
