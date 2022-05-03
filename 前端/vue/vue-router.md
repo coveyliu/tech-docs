@@ -1,12 +1,12 @@
-# hvue-router:star::star:
 
 
 
-==及其重要，使用 vue ，就是在写路由==
+
+>  ==及其重要，使用 vue ，就是在写路由==
 
 
 
-## 路由工作原理
+# 路由工作原理
 
 
 
@@ -18,21 +18,17 @@
 
 
 
-## 关于 vue-router
+# 关于 vue-router
+
+- `vue` 的一个插件库，专门用来实现 `SPA` 应用
+- `SPA` 应用
+  1. 整个应用只有一个完整的页面
+  2. 点击页面中的导航连接不会刷新信息，只会做页面的==局部更新==
+  3. 数据需要通过 `ajax` 获取
 
 
 
-
-
-<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220415224738.png" alt="image-20220415224738416" style="zoom:33%;" />
-
-
-
-
-
-
-
-## 基础内容
+# 基础内容
 
 
 
@@ -52,9 +48,10 @@
 
 
 
-和 `vuex` 一样，`vue2` 需要 `vue-router` 的 3 版本， `vue3` 需要 `vue-router` 的 4 版本
-
-我使用的是 `vue2`，下载` npm i vue-router@3`
+- 版本要求（和 `vuex` 一样，不同的 版本的`vue` 使用的版本不同 
+  -  `vue3` 需要 `vue-router` 的 4 版本
+  - `vue2` 需要 `vue-router` 的 3 版本
+    - ` npm i vue-router@3`
 
 
 
@@ -64,7 +61,7 @@
 
 1. 安装
 2. 创建 `router`
-   1. 创建文件`router/index.js` （路由器一般写在这个文件下）
+   1. 创建文件`/src/router/index.js` （路由器一般写在这个文件下）
    2. `import VueRouter from "vue-router";`
    3. 引入组件
    4. new VueRouter（配置 k=v, k: path, v:组件）
@@ -77,25 +74,153 @@
 
 
 
+`/src/router/index.js`
+
+```javascript
+// VueRouter
+import VueRouter from "vue-router";
+// 组件
+import Product from '@/pages/Product'
+
+// 实例
+const router = new VueRouter({
+    // 配置 routes, 数组
+    routes: [
+        {
+            name: 'PRODUCT',
+            path: '/product', // 路径
+            component: Product // 要跳转的组件
+        }
+    ]
+})
+
+export default router
+```
+
+
+
+`main.js`
+
+```javascript
+import Vue from 'vue'
+import App from './App.vue'
+import VueRouter from 'vue-router'
+
+// import 
+import router from '@/router'
+
+// 使用 VueRouter 插件
+Vue.use(VueRouter)
+
+Vue.config.productionTip = false
+
+
+
+new Vue({
+  render: h => h(App),
+  router // 配置路由
+}).$mount('#app')
+
+```
+
+
+
+### 路由组件显示或隐藏
+
+
+
+<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220420175056.png" alt="image-20220420175056078" style="zoom:50%;" />
+
+
+
+
+
+# 配置
+
 
 
 ### 嵌套路由
 
-- [ ] todo
+
+
+`Home.vue` 嵌套了`News.vue`, `Message.vue`
+
+`Home.vue`
+
+```vue
+<template>
+  <div>
+    <div>
+      <ul>
+        <li><router-link to="/home/news">news</router-link></li>
+        <li><router-link to="/home/message">message</router-link></li>
+      </ul>    
+    </div>
+
+    <router-view></router-view>
+  </div>
+  
+</template>
+
+<script>
+export default {
+    name:"Home"
+}
+</script>
+```
+
+
+
+`/src/router/index.js`
+
+```javascript
+import VueRouter from "vue-router";
+
+import Home from '../pages/Home'
+import News from '../pages/News'
+import Message from '../pages/Message'
+
+
+// 路由 = 路径：组件
+const router = new VueRouter({
+
+    // mode:"hash",
+    // mode: "history",
+
+    // routes 配置项是个数组
+    routes:[
+        {
+            path:'/home',
+            component: Home, // 访问 /home 是，展示 Home 组件（元素、样式、交互）
+            children:[
+                {
+                    // 子路由不需要 '/'
+                    path:'news',
+                    component: News,
+                },
+                {
+                    path:'message',
+                    component: Message
+                }              
+            ]
+        }
+    ]
+    
+})
+
+
+export default router
+```
 
 
 
 
 
-### 路由 query 参数
 
 
 
-- [ ] todo
 
-
-
-### 给路由命名
+### 配置 `name`
 
 
 
@@ -125,11 +250,81 @@
 
 
 
+### 配置重定向
 
 
 
 
-### params 参数
+
+
+
+
+
+# 路由传参
+
+### 路由传参三种方式
+
+
+
+- 路由传参，真的是把数据传给另一个路由
+
+- 三种方式（以编程式路由跳转为例）
+  - 字符串
+  - 模板字符串
+  - 对象
+
+
+
+**示例**
+
+```vue
+<template>
+  <div>
+      <input type="text" v-model="info">
+      <button @click="submitInfo">提交信息</button>
+  </div>
+</template>
+
+<script>
+export default {
+    name:"Demo",
+    data(){
+        return {
+            info:""
+        }
+    },
+    methods:{
+        submitInfo(){
+            // 方式1
+            this.$router.push("/info/"+this.info)
+            // 方式2
+            this.$router.push(`/info/${this.info}`)
+            // 方式3
+            this.$router.push("/info", {
+                name:"info",
+                params:{
+                    info: this.info
+                }
+            })
+        }
+    }
+}
+</script>
+```
+
+
+
+
+
+### query 形式传递参数
+
+
+
+
+
+
+
+### params 形式传递参数
 
 
 
@@ -147,15 +342,90 @@ todo
 
 
 
-todo
+- 优势
+  - 路由组件接收参数时变得简单，以前：`{{$route.params|query.id}}`, 使用 `props` `{{id}}`
+- 三种形式
+  - 布尔形式，只能传递 `params` 参数
+  - 对象形式
+  - 函数形式
+
+
+
+**布尔形式**
+
+`/src/router/index.js`
+
+```javascript
+{
+    path: "/chuancan/:id",
+    props: ture    
+}
+```
+
+`chuancan.vue`
+
+```html
+<template>
+	<span>{{id}}</span>
+</template>
+<script>
+	export default{
+        name: "Chuancan",
+        props: [id]
+    }
+</script>
+```
+
+
+
+**对象形式**
+
+```javascript
+{
+    path: "/chuancan/:id",
+    props: {id: 1}  
+}
+```
+
+
+
+**函数形式**
+
+```javascript
+{
+    path: "/chuancan",
+    props($route){
+        return: {id: $route.params|query.id}
+    }  
+}
+```
+
+
+
+# 标签
+
+
+
+### `router-link`
+
+
+
+- 作用，路由之间跳转
+- 原理 `vue` 将 `router-link` 标签最终转为 `a` 标签实现跳转
+
+
+
+```html
+<!-- 测试路由 -->
+    <router-link class='a' active-class='active'  to="/About">About</router-link>
+    <router-link class='b' active-class='active' to='/Home'>Home</router-link>
+```
 
 
 
 
 
-
-
-### router-link replace 属性
+#### router-link replace 属性
 
 
 
@@ -169,25 +439,129 @@ todo
 
 
 
-
-
-### 编程式路由跳转
-
-
-
-<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220416191458.png" alt="image-20220416191458644" style="zoom:50%;" />
+### `router-view`
 
 
 
-### 缓存路由组件
+- [ ] todo
 
 
 
-切换路由时，让该路由不被销毁
+# $route & $router
 
 
 
-<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220416192000.png" alt="image-20220416192000572" style="zoom:50%;" />
+- `App.vue` 中注册路由后，路由组件和非路由组件都有 `$route` 和 `$router` 实例
+
+- `$route`
+  - 用作获取路由信息，`path`,`name`,`params` ,`query` 等
+- `$router`
+  - 编程式跳转路由 (`replace`, `push`)
+
+
+
+
+
+# 编程式路由跳转
+
+
+
+- 什么时候声明式路由，什么时候编程式跳转路由？
+  - 简单跳转 -> 声明式（比如，到登录页）
+  - 复杂 -> 编程式（在登录页输入账号密码后，跳转到首页）
+- api
+  - `$router.push()`
+  - `$router.replace()`
+  - `$router.forward()`
+  - `$router.go(n)`
+  - `$router.back()`
+
+
+
+
+
+**示例**
+
+```js
+// push 示例
+this.$router.push({
+    name: 'xxx' // 路由组件名字,
+    params:{ // 路由传参（params 形式）
+    	id: "xxx", // 
+    	name: 'xxx'
+	},
+    query:{
+                  
+    }                  
+})
+
+this.$router.replace({
+    name: 'xxx' // 路由组件名字,
+    params:{ // 路由传参（params 形式）
+    	id: "xxx", // 
+    	name: 'xxx'
+	},
+    query:{
+                  
+    }                  
+})
+
+this.$router.forward()
+this.$router.back()
+this.$router.go(3)
+```
+
+
+
+### 重写 push & replace 方法
+
+
+
+- 问题
+  - 多次调用 `this.$router.push(...)` 会报错 `NavigationDuplicated`
+- 解决方式
+  - 重写 `push`, `replace`
+  - 参考：https://www.bilibili.com/video/BV1Vf4y1T7bw?p=10&spm_id_from=pageDriver
+
+
+
+`router/index.js`
+
+```vue
+let originPush = VueRouter.prototype.push
+let originReplace = VueRouter.prototype.replace
+
+// 重新设置 push,replace 属性
+VueRouter.prototype.push=function(location){ // 不好的地方：以后push 只能传一个参数
+	originPush(this, localtion, ()=>, ()=>)
+}
+VueRouter.prototype.replace=function(location){
+	originReplace(this, localtion, ()=>, ()=>)
+}
+```
+
+
+
+其它组件中正常用 `push`, `replace` 跳转即可
+
+`Home.vue`
+
+```vue
+export default function({
+
+	methods:{
+		sendInfo(){
+			this.$router.push("/home")
+		}
+	}
+})
+```
+
+
+
+
+
+# 路由生命周期
 
 
 
@@ -204,9 +578,21 @@ todo
 
 
 
+### 缓存路由组件
 
 
-## 路由守卫:star:
+
+切换路由时，让该路由不被销毁
+
+
+
+<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220416192000.png" alt="image-20220416192000572" style="zoom:50%;" />
+
+
+
+
+
+# 路由守卫:star:
 
 - 分类
   - 全局
@@ -324,7 +710,7 @@ todo
 
 
 
-##  router 两种工作模式
+#  router 两种工作模式
 
 
 
@@ -348,7 +734,7 @@ todo
 
 
 
-## 注意事项
+# 注意事项
 
 
 
@@ -372,6 +758,18 @@ todo
 
 
 
+# 相关面试题
+
+
+
+1. 路由传递参数（对象写法）path 是否可以可以 params 参数一起使用？
+2. 如何指定 params 参数可传可不传？
+   1. 路径发生变化
+      - 传递时： `#/chuancan2/1/zs`
+      - 不传递：`#/` (路径都不正常了)
+3. params 参数可以传递也可以不传递，但是如果传递的是空串，如何解决？
+4. 路由传参能用 props 吗？
+   - 可以，而且路由组件接收参数，会变的很简单
 
 
 
@@ -379,108 +777,4 @@ todo
 
 
 
-
-## 提供的标签
-
-
-
-
-
-### vue-link
-
-- 作用：路由跳转
-
-- 原理：vue-link 最终会转为 a 标签
-
-
-
-```html
-<!-- 测试路由 -->
-    <router-link class='a' active-class='active'  to="/About">About</router-link>
-    <router-link class='b' active-class='active' to='/Home'>Home</router-link>
-```
-
-
-
-
-
-### vue-view
-
-
-
-指定组件呈现的位置
-
-
-
-
-
-# vue 组件库
-
-
-
-- 移动端
-  - Vant
-  - Cube UI
-  - Mint UI
-- PC 端
-  - Element UI
-  - IView UI
-
-
-
-==不要记这些组件的 api，看文档就行了==
-
-
-
-## 使用 element ui
-
-
-
-环境， vue 2
-
-- 按需引入
-
-  1. 安装 babel-plugin-component, npm install babel-plugin-component -D
-     - 这是一个 vue 插件，每个项目都需要用
-
-  2. 配置 `babel.config.js`
-
-     ```js
-     module.exports = {
-       presets: [
-         '@vue/cli-plugin-babel/preset',
-         ["@babel/preset-env", { "modules": false }]
-       ],
-       "plugins": [
-         [
-           "component",
-           {
-             "libraryName": "element-ui",
-             "styleLibraryName": "theme-chalk"
-           }
-         ]
-       ]
-     }
-     
-     ```
-
-  3. 接下来，如果你只希望引入部分组件，比如 `Button` 和 `Select`，那么需要在 `main.js` 中写入以下内容
-
-     ```js
-     import Vue from 'vue';
-     import { Button, Select } from 'element-ui';
-     import App from './App.vue';
-     
-     Vue.component(Button.name, Button);
-     Vue.component(Select.name, Select);
-     
-     new Vue({
-       el: '#app',
-       render: h => h(App)
-     });
-     ```
-
-     
-
-
-
+一般都是直接取，`$route.params.keyword`,`$route.query.id`

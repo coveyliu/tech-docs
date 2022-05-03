@@ -64,8 +64,40 @@
 
 ## 行级块元素
 
-- `inline-block`
-  - `img`
+- `inline-block`，有以下标签
+
+  ```html
+  <button></button>
+  <input>
+  <textarea></textarea>
+  <select>1</select>
+  <img>
+  ```
+
+
+
+- 特点
+
+  - 可以设置 `width`, `height`, `margin`, `padding`
+
+    ```html
+    <style>
+            button{
+                width: 100px;
+                height: 100px;
+                margin: 10px 100px;
+                padding: 100px 20px;
+            }
+        </style>
+    ```
+
+
+
+## 语义化元素
+
+
+
+语义化元素在布局的时候，只需要看标签语义即可
 
 
 
@@ -326,13 +358,13 @@ div ~ p {
 
 >  *::first-letter 表示第一个字母*
 >
->  ​        *::first-line 表示第一行*
+>  :first-line 表示第一行*
 >
->  ​        *::selection 表示选中的内容*
+>  *::selection 表示选中的内容*
 >
->  ​        *::before 元素的开始* 
+>  *::before 元素的开始* 
 >
->  ​        *::after 元素的最后*
+>  *::after 元素的最后*
 >
 >  ​          *- before 和 after 必须结合content属性来使用*
 
@@ -341,6 +373,13 @@ div ~ p {
 - `before`, `after` 可以添加内容
 - `before`,`after` 仍然是选择器，选择的元素内容是 `content`,是行内元素
 - `before`, `after` 是在某个元素的内容前后
+
+
+
+
+
+- 为什么叫做伪元素？
+  - 因为这些选择器选择的假冒的元素（可以这样理解）
 
 
 
@@ -486,6 +525,33 @@ div ~ p {
 
 
 
+### 颜色单位
+
+
+
+- 三种写法
+  1. 颜色值
+  2. RGB、RGBA
+     - 透明度，1：不透明，0：完全透明，.5: 半透明
+  3. 16进制
+     - 6位16进制数字，有时候可以省略为3位
+
+
+
+```css
+background-color: rgb(255, 0, 0);
+background-color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 255);
+background-color: rgba(0, 0, 255, 1);
+background-color: rgba(0, 0, 255, 0);
+background-color: rgba(0, 0, 255, .5);
+background-color: #fff;
+background-color: #fff0aa;
+background-color: #000;
+```
+
+
+
 
 
 
@@ -516,11 +582,37 @@ div ~ p {
 
 ### text-align
 
+- 仅适用于块元素
 
+  - 让子元素（inline， inline-block）以及文本如何排列
 
-- `center`（水平居中）
-  - 行级、行级块元素居中
-  - 块元素的文本居中（比如，下面例子中 p, h2 标签的文本内容）
+- 属性值可以是
+
+  ```css
+  /* Keyword values */
+  text-align: left;
+  text-align: right;
+  text-align: center;
+  text-align: justify;
+  text-align: justify-all;
+  text-align: start;
+  text-align: end;
+  text-align: match-parent;
+  
+  /* Block alignment values (Non-standard syntax) */
+  text-align: -moz-center;
+  text-align: -webkit-center;
+  
+  /* Global values */
+  text-align: inherit;
+  text-align: initial;
+  text-align: unset;
+  ```
+
+- `center` 效果
+
+  - 让**子行内元素**、**子行内块元素**、**文本**，**水平居中**
+  - 可以被继承
 
 
 
@@ -580,61 +672,11 @@ div ~ p {
 
 
 - 作用
-  - 单行文字居中
-- 
-
-# css - 效果
+  - 单行文字居中（==垂直居中==）
 
 
 
-
-
-## 过渡
-
-
-
-- 属性
-  - `transition`
-  - `transition-property`
-  - `transition-duration`
-  - `transition-timing-function`
-    - `steps()`分布执行
-      - `steps(1)`
-      - `steps(2)`
-      - `steps(3, end)`（第二值，默认：end）
-      - `steps(3, start)`
-  - ...
-
-
-
-**示例**
-
-```css
-
-```
-
-
-
-
-
-### 动画
-
-
-
-- 属性 `animation`
-- 
-
-
-
-
-
-## 旋转
-
-
-
-
-
-
+<img src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220428103750.png" alt="image-20220428103749740" style="zoom:33%;" />
 
 
 

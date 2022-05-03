@@ -299,12 +299,12 @@
 - 关于 js 的模块化
   - 一个 js 文件就是一个模块
 - 使用顺序
-  - 先导出
-  - 再引入
+  - `js` 模块中定义好后，`export`
+  - 其它 `js` 模块使用时，`import`
 
 
 
-
+**示例**
 
 `user.js`
 
@@ -359,7 +359,7 @@ export {u2, u3}
         console.log(defaultF())
 
         // 引入
-        // 1. import xxx from 'xxx.js' // 引入默认的
+        // 1. import xxx from 'xxx.js' // 引入默认的，xxx 可以是任意名字（用于接收默认导出的对象）
         // 2. import {x1} from 'x.js' // 引入一个
         // 3. import {x1, x2} from 'x.js' // 引入多个
         // 4. import * as xx from 'xx.js' // 引入全部，此时，必须取别名
