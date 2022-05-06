@@ -147,4 +147,3 @@ public class ThreadPoolTaskExecutor extends ExecutorConfigurationSupport
 
 
 
-![](https://typora-covey.oss-cn-shanghai.aliyuncs.com/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220302173635.jpg)
