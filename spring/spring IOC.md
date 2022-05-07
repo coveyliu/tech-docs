@@ -1,42 +1,62 @@
-# 重新认识 IOC
+<!-- TOC -->
+
+- [1. 重新认识 IOC](#1-%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86-ioc)
+- [2. Spring IOC 概述](#2-spring-ioc-%E6%A6%82%E8%BF%B0)
+- [3. Spring Bean](#3-spring-bean)
+    - [3.1. 基础](#31-%E5%9F%BA%E7%A1%80)
+    - [3.2. Bean 作用域](#32-bean-%E4%BD%9C%E7%94%A8%E5%9F%9F)
+    - [3.3. Bean 生命周期](#33-bean-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+- [4. Spring 依赖查找](#4-spring-%E4%BE%9D%E8%B5%96%E6%9F%A5%E6%89%BE)
+- [5. Spring 依赖注入](#5-spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+    - [5.1. 注入方式](#51-%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F)
+    - [5.2. 注入类型](#52-%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B)
+    - [5.3. 延迟注入](#53-%E5%BB%B6%E8%BF%9F%E6%B3%A8%E5%85%A5)
+    - [5.4. 限定注入 @Qualifier](#54-%E9%99%90%E5%AE%9A%E6%B3%A8%E5%85%A5-qualifier)
+    - [5.5. @Autowired 注入原理](#55-autowired-%E6%B3%A8%E5%85%A5%E5%8E%9F%E7%90%86)
+    - [5.6. 自定义依赖注入注解](#56-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%B3%A8%E8%A7%A3)
+- [6. IOC 依赖来源](#6-ioc-%E4%BE%9D%E8%B5%96%E6%9D%A5%E6%BA%90)
+
+<!-- /TOC -->
+
+# 1. 重新认识 IOC
 
 
 
 
 
-# Spring IOC 概述
+# 2. Spring IOC 概述
 
 
 
 
 
-# Spring Bean
+# 3. Spring Bean
 
-## 基础
-
-
-
-## Bean 作用域
+## 3.1. 基础
 
 
 
-## Bean 生命周期
+## 3.2. Bean 作用域
 
 
 
-
-
-# Spring 依赖查找
+## 3.3. Bean 生命周期
 
 
 
 
 
-# Spring 依赖注入
+# 4. Spring 依赖查找
 
 
 
-## 注入方式
+
+
+# 5. Spring 依赖注入
+
+
+
+## 5.1. 注入方式
 
 
 
@@ -44,7 +64,7 @@
 
 
 
-## 注入类型
+## 5.2. 注入类型
 
 - 基本类型
 - 引用类型
@@ -70,7 +90,7 @@ public class Demo{
 
 
 
-## 延迟注入
+## 5.3. 延迟注入
 
 
 
@@ -78,7 +98,7 @@ public class Demo{
 
 
 
-## 限定注入 @Qualifier
+## 5.4. 限定注入 @Qualifier
 
 三个作用：
 
@@ -242,19 +262,19 @@ public class QualifierAnnotationDependencyInjectionDemo {
 
 
 
-## @Autowired 注入原理
+## 5.5. @Autowired 注入原理
 
 
 
-## 自定义依赖注入注解
-
-
-
-
+## 5.6. 自定义依赖注入注解
 
 
 
 
 
-# IOC 依赖来源
+
+
+
+
+# 6. IOC 依赖来源
 
