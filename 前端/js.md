@@ -814,9 +814,7 @@ console.log(JSON.parse(s));
 
 
 
-![image-20220515181521849](https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220515181522.png)
-
-
+<img src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220515181522.png'>
 
 **parent.insertBefore(node, child)**
 
