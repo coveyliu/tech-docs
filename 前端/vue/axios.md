@@ -1,16 +1,40 @@
->参考，这个就行了https://www.cnblogs.com/nogodie/p/9853660.html
+
+<!-- TOC -->
+
+- [1. axios](#1-axios)
+    - [1.1. API](#11-api)
+        - [1.1.1. get 请求](#111-get-%E8%AF%B7%E6%B1%82)
+        - [1.1.2. post 请求](#112-post-%E8%AF%B7%E6%B1%82)
+        - [1.1.3. 其它请求方式](#113-%E5%85%B6%E5%AE%83%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F)
+    - [1.2. 响应](#12-%E5%93%8D%E5%BA%94)
+        - [1.2.1. 响应数据格式](#121-%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F)
+        - [1.2.2. 接收响应](#122-%E6%8E%A5%E6%94%B6%E5%93%8D%E5%BA%94)
+    - [1.3. 创建实例](#13-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B)
+    - [1.4. 配置](#14-%E9%85%8D%E7%BD%AE)
+        - [1.4.1. 请求配置](#141-%E8%AF%B7%E6%B1%82%E9%85%8D%E7%BD%AE)
+        - [1.4.2. 默认配置](#142-%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE)
+    - [1.5. 添加拦截器](#15-%E6%B7%BB%E5%8A%A0%E6%8B%A6%E6%88%AA%E5%99%A8)
+        - [1.5.1. axios 添加拦截器](#151-axios-%E6%B7%BB%E5%8A%A0%E6%8B%A6%E6%88%AA%E5%99%A8)
+        - [1.5.2. 实例添加拦截器](#152-%E5%AE%9E%E4%BE%8B%E6%B7%BB%E5%8A%A0%E6%8B%A6%E6%88%AA%E5%99%A8)
+- [2. 和 vue 一起用](#2-%E5%92%8C-vue-%E4%B8%80%E8%B5%B7%E7%94%A8)
+    - [2.1. 二次封装](#21-%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85)
+
+<!-- /TOC -->
+
+
+>参考，这个就行了 <a href = 'https://www.cnblogs.com/nogodie/p/9853660.html'>参考</a>
 
 
 
-# axios
+# 1. axios
 
 
 
-## API
+## 1.1. API
 
 
 
-### get 请求
+### 1.1.1. get 请求
 
 
 
@@ -71,7 +95,7 @@ axios.get('/user', {
 
 
 
-### post 请求
+### 1.1.2. post 请求
 
 
 
@@ -98,7 +122,7 @@ axios.post('/user', {
 
 
 
-### 其它请求方式
+### 1.1.3. 其它请求方式
 
 也支持 `delete`, `options`, `put`, `patch` 方式的请求
 
@@ -114,11 +138,11 @@ axios.post('/user', {
 
 
 
-## 响应
+## 1.2. 响应
 
 
 
-### 响应数据格式
+### 1.2.1. 响应数据格式
 
 某个请求的响应包含以下信息
 
@@ -148,7 +172,7 @@ axios.post('/user', {
 
 
 
-### 接收响应
+### 1.2.2. 接收响应
 
 
 
@@ -169,7 +193,7 @@ axios.get('/user/12345')
 
 
 
-## 创建实例
+## 1.3. 创建实例
 
 可以使用自定义配置新建一个 axios 实例
 
@@ -191,11 +215,11 @@ const instance = axios.create({
 
 
 
-## 配置
+## 1.4. 配置
 
 
 
-### 请求配置
+### 1.4.1. 请求配置
 
  `axios` 有个 发送请求的 api，都有一个 `config` 参数
 
@@ -215,7 +239,7 @@ const instance = axios.create({
 
 
 
-### 默认配置
+### 1.4.2. 默认配置
 
 所有请求都会使用的配置
 
@@ -250,7 +274,7 @@ instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 
 
-## 添加拦截器
+## 1.5. 添加拦截器
 
 
 
@@ -263,7 +287,7 @@ instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 
 
-### axios 添加拦截器
+### 1.5.1. axios 添加拦截器
 
 
 
@@ -291,7 +315,7 @@ axios.interceptors.response.use(function (response) {
 
 
 
-### 实例添加拦截器
+### 1.5.2. 实例添加拦截器
 
 ```javascript
 const instance = axios.create();
@@ -321,7 +345,7 @@ instance.interceptors.response.use(function (response) {
 
 
 
-# 和 vue 一起用
+# 2. 和 vue 一起用
 
 
 
@@ -342,7 +366,7 @@ instance.interceptors.response.use(function (response) {
 
 
 
-## 二次封装
+## 2.1. 二次封装
 
 - 为什么需要二次封装？
   - 主要是添加请求处理器，响应处理器完成业务需求

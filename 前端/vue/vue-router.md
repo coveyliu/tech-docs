@@ -423,6 +423,23 @@ todo
 
 
 
+**对象写法**
+
+==对象写法 to 得加 `:`==
+
+```vue
+ <router-link :to="
+      {
+          path: '/chuancan1',
+          params: {
+              id: 1,
+              name: 'zs'
+          }
+      }">传参1</router-link>
+```
+
+
+
 
 
 #### router-link replace 属性
@@ -447,7 +464,9 @@ todo
 
 
 
-# $route & $router
+
+
+# $router, \$router
 
 
 
@@ -465,6 +484,10 @@ todo
 # 编程式路由跳转
 
 
+
+
+
+### 使用
 
 - 什么时候声明式路由，什么时候编程式跳转路由？
   - 简单跳转 -> 声明式（比如，到登录页）
@@ -486,6 +509,7 @@ todo
 // push 示例
 this.$router.push({
     name: 'xxx' // 路由组件名字,
+    path: '/a/b' // 路径
     params:{ // 路由传参（params 形式）
     	id: "xxx", // 
     	name: 'xxx'
@@ -497,6 +521,7 @@ this.$router.push({
 
 this.$router.replace({
     name: 'xxx' // 路由组件名字,
+    path: '/a/b' // 路径
     params:{ // 路由传参（params 形式）
     	id: "xxx", // 
     	name: 'xxx'
