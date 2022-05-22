@@ -1,3 +1,5 @@
+
+
 <!-- TOC -->
 
 - [.1. 快捷键](#1-%E5%BF%AB%E6%8D%B7%E9%94%AE)
@@ -6,10 +8,13 @@
 
 <!-- /TOC -->
 
+  
+## .1. 快捷键
+<a id="markdown-%E5%BF%AB%E6%8D%B7%E9%94%AE" name="%E5%BF%AB%E6%8D%B7%E9%94%AE"></a>
 
-## 1. 快捷键
 
-### 1.1. 一般模式（commond mode)
+### .1.1. 一般模式（commond mode)
+<a id="markdown-%E4%B8%80%E8%88%AC%E6%A8%A1%E5%BC%8F%EF%BC%88commond-mode" name="%E4%B8%80%E8%88%AC%E6%A8%A1%E5%BC%8F%EF%BC%88commond-mode"></a>
 
 ==移动光标的快捷键==
 
@@ -49,7 +54,8 @@
 
 
 
-### 1.2. 编辑模式
+### .1.2. 编辑模式
+<a id="markdown-%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F" name="%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F"></a>
 
-<img src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220522112347.png'>
+<img width=70% src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220522112347.png'>
 
