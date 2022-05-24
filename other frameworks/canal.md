@@ -1,12 +1,20 @@
 
 
+<!-- TOC -->
+
+- [1.1. 安装并配置](#11-%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AE)
+- [1.2. 创建新用户并赋予权限](#12-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7%E5%B9%B6%E8%B5%8B%E4%BA%88%E6%9D%83%E9%99%90)
+- [1.3. 参考](#13-%E5%8F%82%E8%80%83)
+
+<!-- /TOC -->
+
+# 1. 安装 mysql
+<a id="markdown-%E5%AE%89%E8%A3%85-mysql" name="%E5%AE%89%E8%A3%85-mysql"></a>
 
 
-# 安装 mysql
 
-
-
-## 安装并配置
+## 1.1. 安装并配置
+<a id="markdown-%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AE" name="%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AE"></a>
 
 
 
@@ -42,7 +50,8 @@ server-id=1
 
 
 
-## 创建新用户并赋予权限
+## 1.2. 创建新用户并赋予权限
+<a id="markdown-%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7%E5%B9%B6%E8%B5%8B%E4%BA%88%E6%9D%83%E9%99%90" name="%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7%E5%B9%B6%E8%B5%8B%E4%BA%88%E6%9D%83%E9%99%90"></a>
 
 
 
@@ -80,7 +89,8 @@ mysql>
 
 
 
-## 参考
+## 1.3. 参考
+<a id="markdown-%E5%8F%82%E8%80%83" name="%E5%8F%82%E8%80%83"></a>
 
 
 
@@ -95,7 +105,8 @@ mysql>
 
 
 
-# 安装 canal
+# 2. 安装 canal
+<a id="markdown-%E5%AE%89%E8%A3%85-canal" name="%E5%AE%89%E8%A3%85-canal"></a>
 
 
 
