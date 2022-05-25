@@ -105,7 +105,7 @@ mysql>
 
 
 
-# 2. 安装 canal
+# 2. 安装 canal server
 <a id="markdown-%E5%AE%89%E8%A3%85-canal" name="%E5%AE%89%E8%A3%85-canal"></a>
 
 
@@ -173,3 +173,22 @@ cd /usr/local/canal
   ```
 
   
+
+
+
+
+
+# 安装 canal admin
+
+
+
+canal 的管理后台，是 1.1.4 之后新增的
+
+
+
+```
+wget --no-check-certificate https://github.com/alibaba/canal/releases/download/canal-1.1.6/canal.admin-1.1.6.tar.gz
+
+
+```
+
