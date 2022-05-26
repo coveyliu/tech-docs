@@ -11,17 +11,17 @@
 
 # 1. 主要内容
 
-什么是 protobuf？
+- 什么是 protobuf？
 
-protobuf 是一种数据格式。这种格式的数据可以跨语言传播。
+  protobuf 是一种统一的数据交换格式，类似 json 字符串。
 
-如何使用 protobuf ？
+- 如何使用 protobuf ？
 
-使用 protobuf 需要三步：
+  使用 protobuf 需要三步：
 
-1. 编写 protobuf 文件。该文件存储了数据信息
-2. 使用 protobuf compiler （protoc）编译为对应语言的文件
-3. 使用 protobuf API 编写程序
+  1. 编写 protobuf 文件。该文件存储了数据信息
+  2. 使用 protobuf compiler （protoc）编译为对应语言的文件
+  3. 使用 protobuf API 编写程序
 
 
 
@@ -35,7 +35,7 @@ protobuf 是一种数据格式。这种格式的数据可以跨语言传播。
 
 ```mermaid
 graph LR;
-	P(message.proto) --protoc--> j;
+	P(YourMessage.proto) --protoc--> j;
 	P --protoc--> p;
 	P --protoc--> g;
 	P --protoc--> o;
@@ -59,7 +59,7 @@ graph LR;
 
 如何使用呢？
 
-- 第一种方式。打开 cmd 窗口，直接敲命令，命令类似下面：
+- 第一种方式。打开 cmd 窗口，利用编译器程序`protoc.exe`，直接敲命令编译你的 `.proto` 文件，命令类似下面：
 
   ```
   protoc -I=$SRC_DIR --java_out=$DST_DIR $SRC_DIR/addressbook.proto
@@ -147,9 +147,7 @@ graph LR;
 
 
 
-protoc 编译后的 java 对象（这里，以 java 为例）有多个 API。感兴趣的可以看下
-
-
+protoc 编译后的 `.java` 文件中提供了（这里，以 java 为例）有多个 API。感兴趣的可以看下。这里介绍下面两中常用的 API（官网上有更多的关于 protobuf API 的内容）
 
 - **Builders API**
 
@@ -178,10 +176,6 @@ protoc 编译后的 java 对象（这里，以 java 为例）有多个 API。感
   - `static Person parseFrom(byte[] data);`: parses a message from the given byte array.
   - `void writeTo(OutputStream output);`: serializes the message and writes it to an `OutputStream`.
   - `static Person parseFrom(InputStream input);`: reads and parses a message from an `InputStream`.
-
-
-
-其它 API 可以参考官网
 
 
 
