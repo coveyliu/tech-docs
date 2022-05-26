@@ -61,7 +61,7 @@ graph LR;
   protoc -I=$SRC_DIR --java_out=$DST_DIR $SRC_DIR/addressbook.proto
   ```
 
-  ==注意：这三个参数是必须的==
+  **注意：这三个参数是必须的**
 
 - 第二种方式，使用 maven 提供的插件，帮你执行上面的编译命令。插件配置和下面的内容差不多
 
@@ -139,7 +139,7 @@ graph LR;
 
 
 
-## protobuf API
+## 1.3. protobuf API
 
 
 
