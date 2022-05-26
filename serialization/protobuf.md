@@ -35,11 +35,15 @@ protobuf 是一种数据格式。这种格式的数据可以跨语言传播。
 
 ```mermaid
 graph LR;
-    j(java)-->A(protobuf bytes);
+	P(message.proto) --序列化--> j;
+	P --序列化--> p;
+	P --序列化--> g;
+	P --序列化--> o;
+    j(java)-->A(bytes);
     p(python)-->A;
     g(go)-->A;
-    B(...)-->A;
-    A --network--> D(反序列);
+    o(...)-->A;
+    A --network--> D(反序列化);
     D --> java;
     D --> python;
     D --> go;
