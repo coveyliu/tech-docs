@@ -1,7 +1,7 @@
 <!-- TOC -->
 
 - [1. 进程](#1-%E8%BF%9B%E7%A8%8B)
-    - [1.1. 什么是进程](#11-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B)
+    - [1.1. 进程基础](#11-%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80)
         - [1.1.1. 服务](#111-%E6%9C%8D%E5%8A%A1)
         - [1.1.2. 特殊的进程管理](#112-%E7%89%B9%E6%AE%8A%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86)
     - [1.2. bash 下的任务管理](#12-bash-%E4%B8%8B%E7%9A%84%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86)
@@ -11,22 +11,27 @@
         - [1.3.3. 脱机管理](#133-%E8%84%B1%E6%9C%BA%E7%AE%A1%E7%90%86)
     - [1.4. 进程管理](#14-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86)
         - [1.4.1. 观察进程](#141-%E8%A7%82%E5%AF%9F%E8%BF%9B%E7%A8%8B)
-        - [1.4.2. 管理进程](#142-%E7%AE%A1%E7%90%86%E8%BF%9B%E7%A8%8B)
-        - [1.4.3. 观察系统资源](#143-%E8%A7%82%E5%AF%9F%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90)
-            - [1.4.3.1. free 查看物理内存](#1431-free-%E6%9F%A5%E7%9C%8B%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98)
-            - [1.4.3.2. 查看系统核心相关信息](#1432-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF)
-            - [1.4.3.3. 观察系统开机时间和负载](#1433-%E8%A7%82%E5%AF%9F%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E6%97%B6%E9%97%B4%E5%92%8C%E8%B4%9F%E8%BD%BD)
-            - [1.4.3.4. 查看网络情况](#1434-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C%E6%83%85%E5%86%B5)
-            - [1.4.3.5. 查看核心侦测的信息](#1435-%E6%9F%A5%E7%9C%8B%E6%A0%B8%E5%BF%83%E4%BE%A6%E6%B5%8B%E7%9A%84%E4%BF%A1%E6%81%AF)
+        - [1.4.2. 调整优先级](#142-%E8%B0%83%E6%95%B4%E4%BC%98%E5%85%88%E7%BA%A7)
+        - [1.4.3. 给进程发信号](#143-%E7%BB%99%E8%BF%9B%E7%A8%8B%E5%8F%91%E4%BF%A1%E5%8F%B7)
+        - [1.4.4. 守护进程（<u>TODO</u>](#144-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8Butodou)
+        - [1.4.5. nohub](#145-nohub)
+        - [1.4.6. 系统日志](#146-%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97)
+        - [1.4.7. systemctl <u>TODO</u>](#147-systemctl-utodou)
+        - [1.4.8. 观察系统资源](#148-%E8%A7%82%E5%AF%9F%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90)
+            - [1.4.8.1. free 查看物理内存](#1481-free-%E6%9F%A5%E7%9C%8B%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98)
+            - [1.4.8.2. 查看系统核心相关信息](#1482-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF)
+            - [1.4.8.3. 观察系统开机时间和负载](#1483-%E8%A7%82%E5%AF%9F%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E6%97%B6%E9%97%B4%E5%92%8C%E8%B4%9F%E8%BD%BD)
+            - [1.4.8.4. 查看网络情况](#1484-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C%E6%83%85%E5%86%B5)
+            - [1.4.8.5. 查看核心侦测的信息](#1485-%E6%9F%A5%E7%9C%8B%E6%A0%B8%E5%BF%83%E4%BE%A6%E6%B5%8B%E7%9A%84%E4%BF%A1%E6%81%AF)
+- [2. SELinux](#2-selinux)
 
 <!-- /TOC -->
-
 
 # 1. 进程
 
 
 
-## 1.1. 什么是进程
+## 1.1. 进程基础
 
 
 
@@ -152,25 +157,142 @@ a.txt  b  ba.txt  b-so  c
 
 ### 1.4.1. 观察进程
 
+观察进程的命令有：
+
+1. `ps`
+2. `pstree`
+3. `top`
+
+下面是我对上述三个命令的总结：
+
+1. `ps` 就记住一个命令就行了 `ps -aux` ，可以查看所有的进程
+2. `pstree` 用的少
+3. `top` 需要记住下面几点：
+   - 执行 `top` 时，按 `1` 可以查看所有 CPU
+   - 执行 `top` 时，按 `s` 可以重置面板刷新时间（默认3s)
+   - 可以仅查看一个进程 `top -p pid`
+
+
+
+<img width="80%" src="https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220405173337.png">
 
 
 
 
 
 
-### 1.4.2. 管理进程
 
 
 
-可以使用 `kill` 向某一进程发送信号
+### 1.4.2. 调整优先级
+
+- 使用的指令
+  - nice
+  - renice，（进程运行期间，就可以调整优先级）
+  - 使用方式：`nice|renice pid 新值`
+- nice 值范围
+  - -20 - 19，值越小优先级越高，抢占资源就越多
+- 一个进程启动时
+  - 默认的 nice 值 0
+  - 进程父进程的 UID，所以，可执行程序跟用户息息相关
 
 
 
-### 1.4.3. 观察系统资源
+
+
+### 1.4.3. 给进程发信号
 
 
 
-#### 1.4.3.1. free 查看物理内存
+信号是进程间通信方式之一，典型用法：用户执行 `kill -9 pid` ，将某个进程终止；前台进程运行时，执行 ctrl+c，就是发送的 sigint 信息（相当于 `kill -2 pid`）
+
+
+
+- 使用 `kill -l` ，可以查看 linux 支持哪些信号及信号对应值
+- 如果想让你的脚本不被 `ctrl+c` 中断（相当于 `kill -2 pid`)，可以专门处理该信号
+- `kill -9 ` 信号不能被阻塞和在脚本中处理
+
+
+
+```bash
+[root@iZwz90l6z42ze1mdxvb9giZ ~]# kill -l
+ 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
+ 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1
+11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
+16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
+21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
+26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
+31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
+38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
+43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
+48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
+53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
+58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
+63) SIGRTMAX-1	64) SIGRTMAX	
+```
+
+
+
+
+
+### 1.4.4. 守护进程（<u>TODO</u>)
+
+
+
+> TODO
+
+
+
+
+
+
+
+### 1.4.5. nohub
+
+
+
+- nohub 和 & 可以让一个命令，忽略（hangup）信号。示例：
+  - `nohub tail -f /var/log/messages &` 
+  - `nohub java -jar xxx.jar &`
+- nohub 和 & 运行的进程并不是 守护进程
+- nohub & 用终端启动一个命令后，关闭终端，那么该进程的父进程就是 1
+  - 原因：关闭终端，该进程是孤儿进程，被 1 进程收留了
+- 和守护进程相同的地方
+  - **进程不受终端是否关闭影响**
+
+
+
+
+
+
+
+### 1.4.6. 系统日志
+
+- 位置，`/var/logs`，需要关注下面的日志
+  - `messages`, 常规日志
+  - `dmesg`, 内核日志
+  - `secure`, 安全日志
+  - `cron`, 定时任务日志
+
+
+
+### 1.4.7. systemctl (<u>TODO</u>)
+
+
+
+> TODO
+
+
+
+
+
+
+
+### 1.4.8. 观察系统资源
+
+
+
+#### 1.4.8.1. free 查看物理内存
 
 ```bash
 [root@iZwz90l6z42ze1mdxvb9giZ ~]# free
@@ -195,7 +317,7 @@ Swap:            0B          0B          0B
 
 
 
-#### 1.4.3.2. 查看系统核心相关信息
+#### 1.4.8.2. 查看系统核心相关信息
 
 ```bash
 [root@iZwz90l6z42ze1mdxvb9giZ ~]# uname -a
@@ -214,7 +336,7 @@ Linux iZwz90l6z42ze1mdxvb9giZ 3.10.0-862.14.4.el7.x86_64 #1 SMP Wed Sep 26 15:12
 
 
 
-#### 1.4.3.3. 观察系统开机时间和负载
+#### 1.4.8.3. 观察系统开机时间和负载
 
 `uptime` 显示开机时间和前 1，5，15 分钟负载
 
@@ -227,7 +349,7 @@ Linux iZwz90l6z42ze1mdxvb9giZ 3.10.0-862.14.4.el7.x86_64 #1 SMP Wed Sep 26 15:12
 
 
 
-#### 1.4.3.4. 查看网络情况
+#### 1.4.8.4. 查看网络情况
 
 `netstat`  是 `net-tools` package 提供的一个功能，你可以 `yum info net-tools` 查看这个包的说明。有的机器可能没有安装 `net-tools`, 可以用 `yum install net-tools` 安装
 
@@ -377,7 +499,7 @@ udp6       0      0 ::1:323                 :::*                                
 
 
 
-#### 1.4.3.5. 查看核心侦测的信息
+#### 1.4.8.5. 查看核心侦测的信息
 
 核心会在开机过程中和运行时侦测的信息放置在内存的某一位置，用 `dmesg` 命令，可以查看这些信息。`dmesg` 可能产生很多的信息，建议使用 `|` 和 `more` 查看
 
@@ -394,4 +516,12 @@ udp6       0      0 ::1:323                 :::*                                
 ```
 
 
+
+
+
+# 2. SELinux
+
+
+
+这块目前用不到先不学了
 
