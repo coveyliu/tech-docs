@@ -1,10 +1,49 @@
+<!-- TOC -->
+
+- [1. Feign](#1-feign)
+    - [1.1. 概览](#11-%E6%A6%82%E8%A7%88)
+    - [1.2. 引入 Feign](#12-%E5%BC%95%E5%85%A5-feign)
+    - [1.3. 重写默认配置](#13-%E9%87%8D%E5%86%99%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE)
+    - [1.4. 超时处理](#14-%E8%B6%85%E6%97%B6%E5%A4%84%E7%90%86)
+    - [1.5. 手动创建 Feign client - FeignClientBuilder](#15-%E6%89%8B%E5%8A%A8%E5%88%9B%E5%BB%BA-feign-client---feignclientbuilder)
+    - [1.6. Hystrix 支持](#16-hystrix-%E6%94%AF%E6%8C%81)
+    - [1.7. Hystrix Fallback](#17-hystrix-fallback)
+    - [1.8. Feign 短路器支持](#18-feign-%E7%9F%AD%E8%B7%AF%E5%99%A8%E6%94%AF%E6%8C%81)
+    - [1.9. Feign 和 @Primay](#19-feign-%E5%92%8C-primay)
+    - [1.10. Feign client 可以继承](#110-feign-client-%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF)
+    - [1.11. Feign 请求和响应压缩](#111-feign-%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E5%8E%8B%E7%BC%A9)
+    - [1.12. Feign 日志](#112-feign-%E6%97%A5%E5%BF%97)
+    - [1.13. @QueryMap](#113-querymap)
+    - [1.14. HATEOAS support](#114-hateoas-support)
+    - [1.15. @MatrixVariable 支持](#115-matrixvariable-%E6%94%AF%E6%8C%81)
+    - [1.16. Reactive 支持](#116-reactive-%E6%94%AF%E6%8C%81)
+- [2. 可配置属性](#2-%E5%8F%AF%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7)
+- [3. 源码分析](#3-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+    - [3.1. 自动配置](#31-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE)
+        - [3.1.1. FeignRibbonClientAutoConfiguration](#311-feignribbonclientautoconfiguration)
+        - [3.1.2. FeignHalAutoConfiguration](#312-feignhalautoconfiguration)
+        - [3.1.3. FeignAutoConfiguration](#313-feignautoconfiguration)
+        - [3.1.4. FeignAcceptGzipEncodingAutoConfiguration](#314-feignacceptgzipencodingautoconfiguration)
+        - [3.1.5. FeignContentGzipEncodingAutoConfiguration](#315-feigncontentgzipencodingautoconfiguration)
+        - [3.1.6. FeignLoadBalancerAutoConfiguration](#316-feignloadbalancerautoconfiguration)
+    - [3.2. @Import](#32-import)
+    - [3.3. @EnableFeignClients](#33-enablefeignclients)
+        - [3.3.1. FeignClientsRegistrar](#331-feignclientsregistrar)
+    - [3.4. @FeignClient](#34-feignclient)
+    - [3.5. 发送请求，获取响应 - Client](#35-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94---client)
+        - [3.5.1. 默认实现 - Default](#351-%E9%BB%98%E8%AE%A4%E5%AE%9E%E7%8E%B0---default)
+        - [3.5.2. 其它实现](#352-%E5%85%B6%E5%AE%83%E5%AE%9E%E7%8E%B0)
+        - [3.5.3. URL 组件](#353-url-%E7%BB%84%E4%BB%B6)
+        - [3.5.4. 网络连接 - URLConnection](#354-%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5---urlconnection)
+        - [3.5.5. 子类 - HttpURLConnection](#355-%E5%AD%90%E7%B1%BB---httpurlconnection)
+
+<!-- /TOC -->
+
+# 1. Feign
 
 
-# Feign
 
-
-
-## 概览
+## 1.1. 概览
 
 
 
@@ -18,7 +57,7 @@
 
 
 
-## 引入 Feign
+## 1.2. 引入 Feign
 
 引入 stater 即可
 
@@ -81,7 +120,7 @@ public interface StoreClient {
 
 
 
-## 重写默认配置
+## 1.3. 重写默认配置
 
 
 
@@ -122,7 +161,7 @@ public interface StoreClient {
 
 
 
-## 超时处理
+## 1.4. 超时处理
 
 
 
@@ -163,7 +202,7 @@ public interface StoreClient {
 
 
 
-## 手动创建 Feign client - `FeignClientBuilder`
+## 1.5. 手动创建 Feign client - `FeignClientBuilder`
 
 
 
@@ -200,7 +239,7 @@ class FooController {
 
 
 
-## Hystrix 支持
+## 1.6. Hystrix 支持
 
 
 
@@ -214,7 +253,7 @@ class FooController {
 
 
 
-## Hystrix Fallback
+## 1.7. Hystrix Fallback
 
 
 
@@ -270,7 +309,7 @@ class FooController {
 
 
 
-## Feign 短路器支持
+## 1.8. Feign 短路器支持
 
 
 
@@ -302,7 +341,7 @@ class FooController {
 
 
 
-## Feign 和 @Primay
+## 1.9. Feign 和 @Primay
 
 - 背景
 
@@ -323,13 +362,13 @@ class FooController {
 
 
 
-## Feign client 可以继承
+## 1.10. Feign client 可以继承
 
 继承：将通用的操作，放在基类上
 
 
 
-`UserService`
+`UserService.java`
 
 ```java
 public interface UserService {
@@ -341,7 +380,7 @@ public interface UserService {
 
 
 
-**UserClient.java**
+`UserClient.java`
 
 ```java
 @FeignClient("users")
@@ -354,7 +393,7 @@ public interface UserClient extends UserService {
 
 
 
-## Feign 请求和响应压缩
+## 1.11. Feign 请求和响应压缩
 
 
 
@@ -373,7 +412,7 @@ feign.compression.response.enabled=true
 
 
 
-## Feign 日志
+## 1.12. Feign 日志
 
 
 
@@ -407,7 +446,7 @@ feign.compression.response.enabled=true
 - 异常的时候、请求过程都会记录日志
 
   ```java
-  @Override
+    @Override
     public Object invoke(Object[] argv) throws Throwable {
       RequestTemplate template = buildTemplateFromArgs.create(argv);
       Options options = findOptions(argv);
@@ -440,7 +479,7 @@ feign.compression.response.enabled=true
 
 
 
-## @QueryMap
+## 1.13. @QueryMap
 
 
 
@@ -476,7 +515,7 @@ public interface DemoTemplate {
 
 
 
-## HATEOAS support
+## 1.14. HATEOAS support
 
 
 
@@ -500,7 +539,7 @@ public interface DemoTemplate {
 
 
 
-## @MatrixVariable 支持
+## 1.15. @MatrixVariable 支持
 
 
 
@@ -510,7 +549,7 @@ public interface DemoTemplate {
 
 
 
-## Reactive 支持
+## 1.16. Reactive 支持
 
 
 
@@ -519,7 +558,7 @@ public interface DemoTemplate {
 
 
 
-# 可配置属性
+# 2. 可配置属性
 
 
 
@@ -529,7 +568,7 @@ public interface DemoTemplate {
 
 
 
-# 源码分析
+# 3. 源码分析
 
 
 
@@ -549,7 +588,7 @@ public interface DemoTemplate {
 
 
 
-## 自动配置
+## 3.1. 自动配置
 
 
 
@@ -568,7 +607,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignRibbonClientAutoConfiguration`
+### 3.1.1. `FeignRibbonClientAutoConfiguration`
 
 
 
@@ -599,6 +638,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
      
 
 - 作用：
+  
   - 让 Feign 有负载均衡功能（还是使用的 ribbon）
 - 生成的 client 都是：`org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient`
   - 这些 client 都是由 `FeignRibbonClientAutoConfiguration` 导入的配置类生成
@@ -608,11 +648,12 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
     - `DefaultFeignLoadBalancedConfiguration`
 
 - `LoadBalancerFeignClient`
+  
   - 内部组合一个 `Client` , 发送请求的都是委托给这个 `Client`
 
 
 
-### `FeignHalAutoConfiguration`
+### 3.1.2. `FeignHalAutoConfiguration`
 
 
 
@@ -622,7 +663,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignAutoConfiguration`
+### 3.1.3. `FeignAutoConfiguration`
 
 
 
@@ -642,7 +683,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignAcceptGzipEncodingAutoConfiguration`
+### 3.1.4. `FeignAcceptGzipEncodingAutoConfiguration`
 
 
 
@@ -655,7 +696,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignContentGzipEncodingAutoConfiguration`
+### 3.1.5. `FeignContentGzipEncodingAutoConfiguration`
 
 
 
@@ -665,7 +706,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignLoadBalancerAutoConfiguration`
+### 3.1.6. `FeignLoadBalancerAutoConfiguration`
 
 - 作用
   - 也是让 feign client 有负载均衡功能
@@ -692,7 +733,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-## @Import
+## 3.2. @Import
 
 
 
@@ -724,7 +765,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
   
 
-## `@EnableFeignClients`
+## 3.3. `@EnableFeignClients`
 
 - 注解属性
   - 开发中，一般都是直接使用，没有配置任何属性
@@ -743,7 +784,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `FeignClientsRegistrar`
+### 3.3.1. `FeignClientsRegistrar`
 
 
 
@@ -755,7 +796,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-## `@FeignClient`
+## 3.4. `@FeignClient`
 
 
 
@@ -771,7 +812,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-## 发送请求，获取响应 - `Client`
+## 3.5. 发送请求，获取响应 - `Client`
 
 
 
@@ -782,7 +823,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### 默认实现 - `Default`
+### 3.5.1. 默认实现 - `Default`
 
 `feign.Client.Default`
 
@@ -793,7 +834,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### 其它实现
+### 3.5.2. 其它实现
 
 
 
@@ -814,7 +855,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### `URL` 组件
+### 3.5.3. `URL` 组件
 
 
 
@@ -827,7 +868,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### 网络连接 - `URLConnection`
+### 3.5.4. 网络连接 - `URLConnection`
 
 
 
@@ -852,7 +893,7 @@ org.springframework.cloud.openfeign.loadbalancer.FeignLoadBalancerAutoConfigurat
 
 
 
-### 子类 - `HttpURLConnection`
+### 3.5.5. 子类 - `HttpURLConnection`
 
 
 
