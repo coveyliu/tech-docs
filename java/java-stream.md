@@ -336,7 +336,7 @@ public final class Collectors {
 
 
 
-- ==分组之后，一定会是一个 map==
+- <table><tr><td bgcolor=green>分组之后，一定会是一个 map</td></tr></table>
 
   `Map<String, value>` 至于 `value` 是什么，取决于下游收集器（分组的元素如何处理）
 
