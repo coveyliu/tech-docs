@@ -1,10 +1,22 @@
 
+<!-- TOC -->
+
+- [1. @Configuration](#1-configuration)
+    - [1.1. 使用限制](#11-%E4%BD%BF%E7%94%A8%E9%99%90%E5%88%B6)
+    - [1.2. 源码分析](#12-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+- [2. @Import](#2-import)
+- [3. @Conditional](#3-conditional)
+    - [3.1. 检查 - Condition](#31-%E6%A3%80%E6%9F%A5---condition)
+    - [3.2. @ConditionalOnClass](#32-conditionalonclass)
+    - [3.3. @ConditionalOnProperty](#33-conditionalonproperty)
+- [4. @AutoConfigureBefore](#4-autoconfigurebefore)
+
+<!-- /TOC -->
 
 
 
 
-
-# @Configuration
+# 1. @Configuration
 
 - 特点：
 
@@ -175,7 +187,7 @@ public class AppConfig{
 
 
 
-## 使用限制
+## 1.1. 使用限制
 
 
 
@@ -188,7 +200,7 @@ contriants:
 
 
 
-## 源码分析
+## 1.2. 源码分析
 
 - 处理 @Configuation 需要的组件
   1. `org.springframework.context.annotation.ConfigurationClassPostProcessor`
@@ -203,7 +215,7 @@ contriants:
 
 
 
-# @Import
+# 2. @Import
 
 
 
@@ -217,7 +229,7 @@ contriants:
 
 
 
-# @Conditional
+# 3. @Conditional
 
 
 
@@ -243,7 +255,7 @@ contriants:
 
 
 
-## 检查 - `Condition`
+## 3.1. 检查 - `Condition`
 
 
 
@@ -260,7 +272,7 @@ contriants:
 
 
 
-## @ConditionalOnClass
+## 3.2. @ConditionalOnClass
 
 - 作用
   - 某些类存在的时候，才会创建该bean
@@ -274,7 +286,7 @@ contriants:
 
 
 
-## @ConditionalOnProperty
+## 3.3. @ConditionalOnProperty
 
 
 
@@ -304,7 +316,7 @@ Environment 中是否存在某个属性，判断 condition 是否匹配
 
   
 
-# @AutoConfigureBefore
+# 4. @AutoConfigureBefore
 
 
 

@@ -1,14 +1,15 @@
-# @Aspect 支持
+# 1. @Aspect 支持
 
 <!-- TOC -->
 
-- 1. 启用 @Aspect
-- 2. 声明一个切面
-- 3. 声明 Pointcut
-- 4. 共享 pointcut
-- 5. pointcut 表达式例子
-- 6. Advice
-    - 6.1. advice 参数
+- [1. @Aspect 支持](#1-aspect-%E6%94%AF%E6%8C%81)
+    - [1.1. 启用 @Aspect](#11-%E5%90%AF%E7%94%A8-aspect)
+    - [1.2. 声明一个切面](#12-%E5%A3%B0%E6%98%8E%E4%B8%80%E4%B8%AA%E5%88%87%E9%9D%A2)
+    - [1.3. 声明 Pointcut](#13-%E5%A3%B0%E6%98%8E-pointcut)
+    - [1.4. 共享 pointcut](#14-%E5%85%B1%E4%BA%AB-pointcut)
+    - [1.5. pointcut 表达式例子](#15-pointcut-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BE%8B%E5%AD%90)
+    - [1.6. Advice](#16-advice)
+        - [1.6.1. advice 参数](#161-advice-%E5%8F%82%E6%95%B0)
 
 <!-- /TOC -->
 
@@ -24,7 +25,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 1. 启用 @Aspect
+## 1.1. 启用 @Aspect
 
 
 
@@ -61,7 +62,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 2. 声明一个切面
+## 1.2. 声明一个切面
 
 
 
@@ -82,7 +83,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 3. 声明 Pointcut
+## 1.3. 声明 Pointcut
 
 
 
@@ -152,7 +153,7 @@ Spring 还是利用的 `Aspect` 的相关的 library 解析、匹配 `Pointcut`
 
 
 
-## 4. 共享 pointcut
+## 1.4. 共享 pointcut
 
 
 
@@ -244,7 +245,7 @@ public MyAspectConfiguration{
 
 
 
-## 5. pointcut 表达式例子
+## 1.5. pointcut 表达式例子
 
 
 
@@ -256,11 +257,11 @@ public MyAspectConfiguration{
 
 
 
-## 6. Advice
+## 1.6. Advice
 
 
 
-### 6.1. advice 参数
+### 1.6.1. advice 参数
 
 
 
