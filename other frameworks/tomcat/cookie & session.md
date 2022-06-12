@@ -1,4 +1,14 @@
-# Cookie
+
+<!-- TOC -->
+
+- [1. Cookie](#1-cookie)
+- [2. Session](#2-session)
+    - [2.1. domain 和 path](#21-domain-%E5%92%8C-path)
+    - [2.2. 分布式 session（<u>todo</u>）](#22-%E5%88%86%E5%B8%83%E5%BC%8F-sessionutodou)
+
+<!-- /TOC -->
+
+# 1. Cookie
 
 - `cookie` 可以看作一个容器，以 `K -V ` 形式存储。存储的内容并不在服务端，而是在浏览器等客户端
 - 用 `cookie` 无非是在访问某些 RUL 的时候，传递一些数据给服务端。
@@ -8,14 +18,16 @@
 
 
 
-# Session
+# 2. Session
 
+```
 1. `Tomcat` 如何生成 `Session`
 2. `Session` 对象的有效期是多少？
 3. `Tomcat` 是如何根据 `Session` 判断某个请求的用户的？
 4. 服务端和客户端，关于 `Session` 的交互过程是怎样的？
+```
 
-------
+
 
 关于 `Session` ，先看下 `Tomcat` 文档中描述：
 
@@ -86,11 +98,13 @@ public interface HttpSession {
 
 
 
-## domain 和 path
+## 2.1. domain 和 path
 
-1. `Cookie` 可以设置 `domain` 和 `path`, `Session` 可以设置这两个配置项吗？
+```
+- `Cookie` 可以设置 `domain` 和 `path`, `Session` 可以设置这两个配置项吗？
+```
 
-----------------------
+
 
 
 
@@ -131,17 +145,17 @@ public class Session_Controller {
 
 首次访问 `/session/get` 时
 
-<img width='60%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183607.png'>
+<img width='50%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183607.png'>
 
  
 
 访问 `/session/no`
 
-<img width='60%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183629.png'>
+<img width='50%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183629.png'>
 
 再次 `/session/get` 时
 
-<img width='60%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183620.png'>
+<img width='50%' src='https://blog-bt.oss-cn-beijing.aliyuncs.com/1/20220612183620.png'>
 
 看下 `chrome` 浏览器中 `cookie` 信息
 
@@ -151,10 +165,12 @@ public class Session_Controller {
 
 
 
-## 分布式 session（<u>todo</u>）
+## 2.2. 分布式 session（<u>todo</u>）
 
+```
 - 分布式 `session` 的用途？
 - 分布式 `session` 的实现方式（主要关注 `spring` 提供的方案）
+```
 
-------
+
 
