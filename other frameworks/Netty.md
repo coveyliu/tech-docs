@@ -976,7 +976,9 @@ ServerBootstrap serverBootstrap = new ServerBootstrap();
 
 ## 5.4. `ByteBuf`
 
+- 
 
+- 
 
 
 
@@ -990,13 +992,16 @@ ServerBootstrap serverBootstrap = new ServerBootstrap();
 
 
 
-`xxl-job` 写了个一个服务端 `EmbedServer`。`EmbedServer` 两个作用：1. 主动发送 `Http` 请求，2. 接受 `Http` 请求
+1. `xxl-job` 写了个一个服务端 `EmbedServer`。`EmbedServer` 两个作用：1. 主动发送 `Http` 请求，2. 接受 `Http` 请求
 
-用到了三个 `netty` 内置的 `ChannelHandler`。并且设置 `child channel` 为 `ChannelOption.SO_KEEPALIVE = true`
+2. 用到了三个 `netty` 内置的 `ChannelHandler`。并且设置 `child channel` 为 `ChannelOption.SO_KEEPALIVE = true`
 
-- `IdleStateHandler`
-- `HttpServerCodec`
-- `HttpObjectAggregator`
+   - `IdleStateHandler`
+
+   - `HttpServerCodec`
+
+   - `HttpObjectAggregator`
+
 
 
 
