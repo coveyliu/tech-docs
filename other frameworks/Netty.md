@@ -544,8 +544,6 @@ public class StringHandler extends SimpleChannelInboundHandler<String> {
 
 
 
-
-
 # 4. 优化你的 netty 应用
 
 
@@ -863,11 +861,19 @@ ServerBootstrap serverBootstrap = new ServerBootstrap();
 
 
 
+- [ ] TODO
+
+
+
 
 
 ## 4.6. 防止内存泄漏
 
 > 这部分内容很重要 TODO
+
+
+
+
 
 - [ ] TODO
 
@@ -880,8 +886,8 @@ ServerBootstrap serverBootstrap = new ServerBootstrap();
 
 
 ```
-- 增加安全性：让你的 netty 支持 SSL（这一部分不重要）
-- 增加安全性：配置 ip 白名单（相关类：IpSubnetFilterRule, RuleBasedIpFilter) (TODO)
+- 增加安全性方式1：让你的 netty 支持 SSL（这一部分不重要）
+- 增加安全性方式2：配置 ip 白名单（相关类：IpSubnetFilterRule, RuleBasedIpFilter) (TODO)
 ```
 
 
@@ -992,7 +998,7 @@ ServerBootstrap serverBootstrap = new ServerBootstrap();
 
 
 
-1. `xxl-job` 写了个一个服务端 `EmbedServer`。`EmbedServer` 两个作用：1. 主动发送 `Http` 请求，2. 接受 `Http` 请求
+1. `xxl-job` 写了个在执行器端启动了一个 `EmbedServer`。`EmbedServer` 两个作用：1. 主动发送 `Http` 请求到 `xxl-admin`调度器，2. 接受`xxl-admin` 调度器的 `Http` 请求
 
 2. 用到了三个 `netty` 内置的 `ChannelHandler`。并且设置 `child channel` 为 `ChannelOption.SO_KEEPALIVE = true`
 
@@ -1248,8 +1254,65 @@ public class EmbedServer {
 
 
 
+### `HttpServerCodec`
+
+
+
+<u>*具体怎么编解码的没看，看不懂（呜呜┭┮﹏┭┮）*</u>
+
+
+
+
+
+
+
+### `HttpObjectAggregator`
+
+
+
+感觉在 `netty` 中读了每个 class 的文档描述后，就会使用了，`netty` 的文档写的真是详细
+
+
+
+看下 `HttpObjectAggregator` 的文档描述
+
+```
+A ChannelHandler that aggregates an HttpMessage and its following HttpContents into a single FullHttpRequest or FullHttpResponse (depending on if it used to handle requests or responses) with no following HttpContents. It is useful when you don't want to take care of HTTP messages whose transfer encoding is 'chunked'. Insert this handler after HttpResponseDecoder in the ChannelPipeline if being used to handle responses, or after HttpRequestDecoder and HttpResponseEncoder in the ChannelPipeline if being used to handle requests.
+    ChannelPipeline p = ...;
+    ...
+    p.addLast("decoder", new HttpRequestDecoder());
+    p.addLast("encoder", new HttpResponseEncoder());
+    p.addLast("aggregator", new HttpObjectAggregator(1048576));
+    ...
+    p.addLast("handler", new HttpRequestHandler());
+    
+For convenience, consider putting a HttpServerCodec before the HttpObjectAggregator as it functions as both a HttpRequestDecoder and a HttpResponseEncoder.
+Be aware that HttpObjectAggregator may end up sending a HttpResponse: 
+Response Status
+Condition When Sent
+100 Continue
+A '100-continue' expectation is received and the 'content-length' doesn't exceed maxContentLength
+417 Expectation Failed
+A '100-continue' expectation is received and the 'content-length' exceeds maxContentLength
+413 Request Entity Too Large
+Either the 'content-length' or the bytes received so far exceed maxContentLength
+See Also:
+FullHttpRequest, FullHttpResponse, HttpResponseDecoder, HttpServerCodec
+```
+
+
+
+结论：
+
+- `HttpObjectAggregator` 将 `HttpMessage` 和 `HttpContent` 合在一起了（并且不需要关系 http 通信是否是分块传输的 `transfer-encoding: chunked`)
+- pipleline 中最佳添加方式：`HttpServerCodec` -> `HttpObjectAggregator`
+
+
+
 
 
 # 7. 参考文档
 
 >1. [netty 4.0 新特性](http://ifeve.com/netty-4-0-new/#more-32469) 
+>1. [分块传输编码](https://zh.wikipedia.org/wiki/分块传输编码#:~:text=分块传输编码（Chunked,HTTP%2F1.1）中提供。)
+
