@@ -26,6 +26,8 @@
     - [5.4. ByteBuf](#54-bytebuf)
 - [6. 学习其它框架如何使用 Netty](#6-%E5%AD%A6%E4%B9%A0%E5%85%B6%E5%AE%83%E6%A1%86%E6%9E%B6%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-netty)
     - [6.1. xxl-job](#61-xxl-job)
+        - [6.1.1. HttpServerCodec](#611-httpservercodec)
+        - [6.1.2. HttpObjectAggregator](#612-httpobjectaggregator)
 - [7. 参考文档](#7-%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
 
 <!-- /TOC -->
@@ -1254,7 +1256,7 @@ public class EmbedServer {
 
 
 
-### `HttpServerCodec`
+### 6.1.1. `HttpServerCodec`
 
 
 
@@ -1266,7 +1268,7 @@ public class EmbedServer {
 
 
 
-### `HttpObjectAggregator`
+### 6.1.2. `HttpObjectAggregator`
 
 
 
