@@ -1,11 +1,31 @@
 
+<!-- TOC -->
+
+- [1. 基本用法](#1-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+    - [1.1. 作用](#11-%E4%BD%9C%E7%94%A8)
+    - [1.2. 分类](#12-%E5%88%86%E7%B1%BB)
+    - [1.3. 如何获取流](#13-%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E6%B5%81)
+        - [1.3.1. 关于并行流](#131-%E5%85%B3%E4%BA%8E%E5%B9%B6%E8%A1%8C%E6%B5%81)
+    - [1.4. 中间操作](#14-%E4%B8%AD%E9%97%B4%E6%93%8D%E4%BD%9C)
+    - [1.5. 终端操作](#15-%E7%BB%88%E7%AB%AF%E6%93%8D%E4%BD%9C)
+- [2. 强大的收集器 collect 操作](#2-%E5%BC%BA%E5%A4%A7%E7%9A%84%E6%94%B6%E9%9B%86%E5%99%A8-collect-%E6%93%8D%E4%BD%9C)
+    - [2.1. 作用](#21-%E4%BD%9C%E7%94%A8)
+    - [2.2. 分类](#22-%E5%88%86%E7%B1%BB)
+    - [2.3. 容器收集器](#23-%E5%AE%B9%E5%99%A8%E6%94%B6%E9%9B%86%E5%99%A8)
+    - [2.4. 分组收集器](#24-%E5%88%86%E7%BB%84%E6%94%B6%E9%9B%86%E5%99%A8)
+        - [2.4.1. 参数](#241-%E5%8F%82%E6%95%B0)
+        - [2.4.2. 下游收集器](#242-%E4%B8%8B%E6%B8%B8%E6%94%B6%E9%9B%86%E5%99%A8)
+            - [2.4.2.1. Collectors.collectingAndThen](#2421-collectorscollectingandthen)
+        - [2.4.3. true 或 false 分组](#243-true-%E6%88%96-false-%E5%88%86%E7%BB%84)
+        - [2.4.4. 多级分组](#244-%E5%A4%9A%E7%BA%A7%E5%88%86%E7%BB%84)
+
+<!-- /TOC -->
 
 
+# 1. 基本用法
 
-# 基本用法
 
-
-## 1. 作用
+## 1.1. 作用
 
 `Stream API` 提供了强大的数据处理功能
 
@@ -20,7 +40,7 @@
 
 
 
-## 2. 分类
+## 1.2. 分类
 
 顺序流 和 并行流
 
@@ -28,7 +48,7 @@
 
 
 
-## 3. 如何获取流
+## 1.3. 如何获取流
 
 
 
@@ -112,7 +132,7 @@ public void main(String[] args){
 
 
 
-### 3.1. 关于并行流
+### 1.3.1. 关于并行流
 
 
 
@@ -124,7 +144,7 @@ public void main(String[] args){
 
 
 
-## 4. 中间操作
+## 1.4. 中间操作
 
 
 
@@ -159,7 +179,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 5. 终端操作
+## 1.5. 终端操作
 
 中间操作，真正执行数据处理的工作
 
@@ -211,7 +231,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-# 强大的收集器 collect 操作
+# 2. 强大的收集器 collect 操作
 
 
 
@@ -219,7 +239,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 1. 作用
+## 2.1. 作用
 
 `Stream#collect(Collector c)` 是流的终端操作，对流中元素的处理还是由收集器决定
 
@@ -231,7 +251,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 2. 分类
+## 2.2. 分类
 
 **两类：**
 
@@ -242,7 +262,7 @@ public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
 
 
-## 3. 容器收集器
+## 2.3. 容器收集器
 
 
 
@@ -332,7 +352,7 @@ public final class Collectors {
 
 
 
-## 4. 分组收集器
+## 2.4. 分组收集器
 
 
 
@@ -344,7 +364,7 @@ public final class Collectors {
 
 
 
-### 4.1. 参数
+### 2.4.1. 参数
 
 ```java
 public final class Collectors {
@@ -377,7 +397,7 @@ public final class Collectors {
 
 
 
-### 4.2. 下游收集器
+### 2.4.2. 下游收集器
 
 
 
@@ -442,7 +462,7 @@ static class Student{
 
 
 
-#### 4.2.1. `Collectors.collectingAndThen()`
+#### 2.4.2.1. `Collectors.collectingAndThen()`
 
 
 
@@ -464,7 +484,7 @@ public final class Collectors {
 
 
 
-### 4.3. true 或 false 分组
+### 2.4.3. true 或 false 分组
 
 
 
@@ -510,7 +530,7 @@ static class Student{
 
 
 
-### 4.4. 多级分组
+### 2.4.4. 多级分组
 
 `Collectors.groupBy()`, `Collectos.partitioningBy()`
 
