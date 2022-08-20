@@ -8,9 +8,10 @@
     - [2.1. 触发生命周期回调](#21-%E8%A7%A6%E5%8F%91%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%9E%E8%B0%83)
     - [2.2. 编写业务handler](#22-%E7%BC%96%E5%86%99%E4%B8%9A%E5%8A%A1handler)
 - [3. 编解码](#3-%E7%BC%96%E8%A7%A3%E7%A0%81)
-    - [3.1. 两个抽象](#31-%E4%B8%A4%E4%B8%AA%E6%8A%BD%E8%B1%A1)
-    - [3.2. 解码器](#32-%E8%A7%A3%E7%A0%81%E5%99%A8)
-    - [3.3. netty-codec](#33-netty-codec)
+    - [3.1. 封帧方式](#31-%E5%B0%81%E5%B8%A7%E6%96%B9%E5%BC%8F)
+    - [3.2. 二次解码器](#32-%E4%BA%8C%E6%AC%A1%E8%A7%A3%E7%A0%81%E5%99%A8)
+    - [3.3. 解码器](#33-%E8%A7%A3%E7%A0%81%E5%99%A8)
+    - [3.4. netty-codec](#34-netty-codec)
 - [4. 优化你的 netty 应用](#4-%E4%BC%98%E5%8C%96%E4%BD%A0%E7%9A%84-netty-%E5%BA%94%E7%94%A8)
     - [4.1. LoggingHandler](#41-logginghandler)
     - [4.2. idle 检测](#42-idle-%E6%A3%80%E6%B5%8B)
@@ -455,11 +456,11 @@ public class StringHandler extends SimpleChannelInboundHandler<String> {
 # 3. 编解码
 
 ```
-- 编解码器两个顶层抽象
-- 一次解码器、二次解码器分别是什么？
+- 什么是一次解码器，什么是二次解码器？
+- 两个重要的抽象 ByteToMessageCodec、MessageToMessageCodec
+- 常用解码器：LengthFiledBasedDecoder
+- netty-codec 提供了哪些常用的编解码器？
 ```
-
-
 
 
 
@@ -471,7 +472,205 @@ public class StringHandler extends SimpleChannelInboundHandler<String> {
 
 
 
-## 3.1. 两个抽象
+
+
+
+
+## 封帧方式
+
+```
+- 三种封帧方式：FixedLengthFrameDecoder, DelimiterBasedFrameDecoder, LengthFiledBasedFraomDecoder
+- LengthFiledBasedFrameDecoder 四大参数
+- 
+```
+
+
+
+**`LengthFiledBasedFrameDecoder` 参数**
+
+```
+/**
+ * A decoder that splits the received {@link ByteBuf}s dynamically by the
+ * value of the length field in the message.  It is particularly useful when you
+ * decode a binary message which has an integer header field that represents the
+ * length of the message body or the whole message.
+ * <p>
+ * {@link LengthFieldBasedFrameDecoder} has many configuration parameters so
+ * that it can decode any message with a length field, which is often seen in
+ * proprietary client-server protocols. Here are some example that will give
+ * you the basic idea on which option does what.
+ *
+ * <h3>2 bytes length field at offset 0, do not strip header</h3>
+ *
+ * The value of the length field in this example is <tt>12 (0x0C)</tt> which
+ * represents the length of "HELLO, WORLD".  By default, the decoder assumes
+ * that the length field represents the number of the bytes that follows the
+ * length field.  Therefore, it can be decoded with the simplistic parameter
+ * combination.
+ * <pre>
+ * <b>lengthFieldOffset</b>   = <b>0</b>
+ * <b>lengthFieldLength</b>   = <b>2</b>
+ * lengthAdjustment    = 0
+ * initialBytesToStrip = 0 (= do not strip header)
+ *
+ * BEFORE DECODE (14 bytes)         AFTER DECODE (14 bytes)
+ * +--------+----------------+      +--------+----------------+
+ * | Length | Actual Content |----->| Length | Actual Content |
+ * | 0x000C | "HELLO, WORLD" |      | 0x000C | "HELLO, WORLD" |
+ * +--------+----------------+      +--------+----------------+
+ * </pre>
+ *
+ * <h3>2 bytes length field at offset 0, strip header</h3>
+ *
+ * Because we can get the length of the content by calling
+ * {@link ByteBuf#readableBytes()}, you might want to strip the length
+ * field by specifying <tt>initialBytesToStrip</tt>.  In this example, we
+ * specified <tt>2</tt>, that is same with the length of the length field, to
+ * strip the first two bytes.
+ * <pre>
+ * lengthFieldOffset   = 0
+ * lengthFieldLength   = 2
+ * lengthAdjustment    = 0
+ * <b>initialBytesToStrip</b> = <b>2</b> (= the length of the Length field)
+ *
+ * BEFORE DECODE (14 bytes)         AFTER DECODE (12 bytes)
+ * +--------+----------------+      +----------------+
+ * | Length | Actual Content |----->| Actual Content |
+ * | 0x000C | "HELLO, WORLD" |      | "HELLO, WORLD" |
+ * +--------+----------------+      +----------------+
+ * </pre>
+ *
+ * <h3>2 bytes length field at offset 0, do not strip header, the length field
+ *     represents the length of the whole message</h3>
+ *
+ * In most cases, the length field represents the length of the message body
+ * only, as shown in the previous examples.  However, in some protocols, the
+ * length field represents the length of the whole message, including the
+ * message header.  In such a case, we specify a non-zero
+ * <tt>lengthAdjustment</tt>.  Because the length value in this example message
+ * is always greater than the body length by <tt>2</tt>, we specify <tt>-2</tt>
+ * as <tt>lengthAdjustment</tt> for compensation.
+ * <pre>
+ * lengthFieldOffset   =  0
+ * lengthFieldLength   =  2
+ * <b>lengthAdjustment</b>    = <b>-2</b> (= the length of the Length field)
+ * initialBytesToStrip =  0
+ *
+ * BEFORE DECODE (14 bytes)         AFTER DECODE (14 bytes)
+ * +--------+----------------+      +--------+----------------+
+ * | Length | Actual Content |----->| Length | Actual Content |
+ * | 0x000E | "HELLO, WORLD" |      | 0x000E | "HELLO, WORLD" |
+ * +--------+----------------+      +--------+----------------+
+ * </pre>
+ *
+ * <h3>3 bytes length field at the end of 5 bytes header, do not strip header</h3>
+ *
+ * The following message is a simple variation of the first example.  An extra
+ * header value is prepended to the message.  <tt>lengthAdjustment</tt> is zero
+ * again because the decoder always takes the length of the prepended data into
+ * account during frame length calculation.
+ * <pre>
+ * <b>lengthFieldOffset</b>   = <b>2</b> (= the length of Header 1)
+ * <b>lengthFieldLength</b>   = <b>3</b>
+ * lengthAdjustment    = 0
+ * initialBytesToStrip = 0
+ *
+ * BEFORE DECODE (17 bytes)                      AFTER DECODE (17 bytes)
+ * +----------+----------+----------------+      +----------+----------+----------------+
+ * | Header 1 |  Length  | Actual Content |----->| Header 1 |  Length  | Actual Content |
+ * |  0xCAFE  | 0x00000C | "HELLO, WORLD" |      |  0xCAFE  | 0x00000C | "HELLO, WORLD" |
+ * +----------+----------+----------------+      +----------+----------+----------------+
+ * </pre>
+ *
+ * <h3>3 bytes length field at the beginning of 5 bytes header, do not strip header</h3>
+ *
+ * This is an advanced example that shows the case where there is an extra
+ * header between the length field and the message body.  You have to specify a
+ * positive <tt>lengthAdjustment</tt> so that the decoder counts the extra
+ * header into the frame length calculation.
+ * <pre>
+ * lengthFieldOffset   = 0
+ * lengthFieldLength   = 3
+ * <b>lengthAdjustment</b>    = <b>2</b> (= the length of Header 1)
+ * initialBytesToStrip = 0
+ *
+ * BEFORE DECODE (17 bytes)                      AFTER DECODE (17 bytes)
+ * +----------+----------+----------------+      +----------+----------+----------------+
+ * |  Length  | Header 1 | Actual Content |----->|  Length  | Header 1 | Actual Content |
+ * | 0x00000C |  0xCAFE  | "HELLO, WORLD" |      | 0x00000C |  0xCAFE  | "HELLO, WORLD" |
+ * +----------+----------+----------------+      +----------+----------+----------------+
+ * </pre>
+ *
+ * <h3>2 bytes length field at offset 1 in the middle of 4 bytes header,
+ *     strip the first header field and the length field</h3>
+ *
+ * This is a combination of all the examples above.  There are the prepended
+ * header before the length field and the extra header after the length field.
+ * The prepended header affects the <tt>lengthFieldOffset</tt> and the extra
+ * header affects the <tt>lengthAdjustment</tt>.  We also specified a non-zero
+ * <tt>initialBytesToStrip</tt> to strip the length field and the prepended
+ * header from the frame.  If you don't want to strip the prepended header, you
+ * could specify <tt>0</tt> for <tt>initialBytesToSkip</tt>.
+ * <pre>
+ * lengthFieldOffset   = 1 (= the length of HDR1)
+ * lengthFieldLength   = 2
+ * <b>lengthAdjustment</b>    = <b>1</b> (= the length of HDR2)
+ * <b>initialBytesToStrip</b> = <b>3</b> (= the length of HDR1 + LEN)
+ *
+ * BEFORE DECODE (16 bytes)                       AFTER DECODE (13 bytes)
+ * +------+--------+------+----------------+      +------+----------------+
+ * | HDR1 | Length | HDR2 | Actual Content |----->| HDR2 | Actual Content |
+ * | 0xCA | 0x000C | 0xFE | "HELLO, WORLD" |      | 0xFE | "HELLO, WORLD" |
+ * +------+--------+------+----------------+      +------+----------------+
+ * </pre>
+ *
+ * <h3>2 bytes length field at offset 1 in the middle of 4 bytes header,
+ *     strip the first header field and the length field, the length field
+ *     represents the length of the whole message</h3>
+ *
+ * Let's give another twist to the previous example.  The only difference from
+ * the previous example is that the length field represents the length of the
+ * whole message instead of the message body, just like the third example.
+ * We have to count the length of HDR1 and Length into <tt>lengthAdjustment</tt>.
+ * Please note that we don't need to take the length of HDR2 into account
+ * because the length field already includes the whole header length.
+ * <pre>
+ * lengthFieldOffset   =  1
+ * lengthFieldLength   =  2
+ * <b>lengthAdjustment</b>    = <b>-3</b> (= the length of HDR1 + LEN, negative)
+ * <b>initialBytesToStrip</b> = <b> 3</b>
+ *
+ * BEFORE DECODE (16 bytes)                       AFTER DECODE (13 bytes)
+ * +------+--------+------+----------------+      +------+----------------+
+ * | HDR1 | Length | HDR2 | Actual Content |----->| HDR2 | Actual Content |
+ * | 0xCA | 0x0010 | 0xFE | "HELLO, WORLD" |      | 0xFE | "HELLO, WORLD" |
+ * +------+--------+------+----------------+      +------+----------------+
+ * </pre>
+ * @see LengthFieldPrepender
+ */
+public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
+	// ....
+}
+```
+
+
+
+
+
+## 二次解码器
+
+```
+- 为什么需要二次解码器？
+- 一次解码器的结果是什么？
+```
+
+
+
+- 一次解码器的结果是字节数组。`ByteToMessageDecoder`
+  - `ByteBuf` （原始数据）-> `ByteBuf` (用户数据)
+- 二次解码器。`MessageToMessageDecoder`
+  - `Bytebuf `-> `java Object`
+- 
 
 - 两个抽象：`ByteToMessageDecoder`, `MessageToMessageDecoder`
 
