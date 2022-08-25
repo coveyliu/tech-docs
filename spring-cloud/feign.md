@@ -320,7 +320,7 @@ class FooController {
 
 - 启用这个功能时，会做什么？
 
-  - Feign client 中所有方法，都会用 `circuit breaker` 包裹
+  - Feign client 中所有方法（method)，都会用 `circuit breaker` 包裹
 
 - 如何让一个 feign client 不支持`circuitbreaker`
 
@@ -337,7 +337,7 @@ class FooController {
 
 - `circuitbreaker` 名字是什么？
 
-  - <feignClientName>_<calledMethod>
+  - `<feignClientName>_<calledMethod>`
 
 
 
